@@ -18,15 +18,16 @@ dependencies:
     - docker version
     - docker info
     - if [[ -e ~/docker/ubuntu_wily.tar ]]; then docker load -i ~/docker/ubuntu_wily.tar; fi
-    - docker build -t "osxcc/osxcc:${SDK_VERSION}-${XCODE_VERSION}" .
+    - docker build -t "osxcc/osxcc:latest" .
     - mkdir -p ~/docker; docker save ubuntu:wily > ~/docker/ubuntu_wily.tar
 
 test:
   override:
-    - docker run --rm -it "osxcc/osxcc:${SDK_VERSION}-${XCODE_VERSION}" env
+    - docker run --rm -it "osxcc/osxcc:latest" env
 
 deployment:
   prod:
     branch: master
     commands:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
+      - docker push "osxcc/osxcc:latest"
