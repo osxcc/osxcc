@@ -16,7 +16,8 @@ COPY ./SDKs/MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /
 # docker buildpack-deps:wily-scm:  git openssh-client
 # docker buildpack-deps:wily:      automake autogen file
 # osxcross dependencies:           clang-3.7 llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio
-# ?osxcross ld64 -bitcode_bundle:   libwxbase3.0-dev libwxgtk3.0-dev
+# ?osxcross ld64 -bitcode_bundle:  libwxbase3.0-dev libwxgtk3.0-dev
+# sudo:                            for OS X build work
 RUN set -ex \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -26,6 +27,7 @@ RUN set -ex \
 		automake autogen file \
 		clang-3.7 llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio \
 		libwxbase3.0-dev libwxgtk3.0-dev \
+		sudo \
 	&& rm -rf /var/lib/apt/lists/* \
 	\
 	&& ln -s /usr/bin/clang-3.7 /usr/bin/clang \
