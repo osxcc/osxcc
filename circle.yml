@@ -30,4 +30,4 @@ deployment:
     branch: xcode-7.2_7C68
     commands:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
-      - docker push "osxcc/osxcc:${SDK_VERSION}-${XCODE_VERSION}"
+      - docker push "osxcc/osxcc:latest"
