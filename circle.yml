@@ -8,7 +8,7 @@ machine:
     - docker
   environment:
     SDK_VERSION: 10.11
-    XCODE_VERSION: 7.1.1_7B1005
+    XCODE_VERSION: 7.2_7C68
 
 dependencies:
   cache_directories:
@@ -27,7 +27,7 @@ test:
 
 deployment:
   prod:
-    branch: master
+    branch: xcode-7.2_7C68
     commands:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
-      - docker push "osxcc/osxcc:latest"
+      - docker push "osxcc/osxcc:${SDK_VERSION}-${XCODE_VERSION}"
