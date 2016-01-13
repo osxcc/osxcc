@@ -33,6 +33,9 @@ RUN set -ex \
 	&& ln -s /usr/bin/clang-3.7 /usr/bin/clang \
 	&& ln -s /usr/bin/clang++-3.7 /usr/bin/clang++ \
 	\
+	&& groupadd wheel \
+	&& usermod -G wheel root \
+	\
 	&& git clone https://github.com/tpoechtrager/osxcross.git \
 	&& mv /MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /osxcross/tarballs/MacOSX10.11.sdk.tar.xz \
 	\
