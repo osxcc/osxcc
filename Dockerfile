@@ -4,11 +4,11 @@ MAINTAINER zchee <zchee.io@gmail.com>
 ENV PATH /osxcross/target/bin:$PATH
 
 ARG SDK_VERSION
-ENV SDK_VERSION ${SDK_VERSION:-10.11}
+ENV SDK_VERSION ${SDK_VERSION:-1011}
 ARG XCODE_VERSION
-ENV XCODE_VERSION ${XCODE_VERSION:-7.2_7C68}
+ENV XCODE_VERSION ${XCODE_VERSION:-72_7C68}
 
-ADD ./SDKs/MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /
+COPY ./SDKs/MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /
 
 # Install dependency package
 # apt build-essential:             dpkg-dev g++ gcc libc-dev
@@ -32,11 +32,9 @@ RUN set -ex \
 	&& ln -s /usr/bin/clang++-3.7 /usr/bin/clang++ \
 	\
 	&& git clone https://github.com/tpoechtrager/osxcross.git \
-	&& mv /MacOSX${SDK_VERSION}.sdk /osxcross/tarballs/ \
+	&& mv /MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /osxcross/tarballs/MacOSX10.11.sdk.tar.xz \
 	\
-	&& cd /osxcross/tarballs \
-	&& tar -cf - MacOSX${SDK_VERSION}.sdk | xz -9 -c - > MacOSX${SDK_VERSION}.sdk.tar.xz \
-	&& UNATTENDED=yes MACOSX_DEPLOYMENT_TARGET=$SDK_VERSION SDK_VERSION=$SDK_VERSION OSX_VERSION_MIN=$SDK_VERSION JOBS=$(($(nproc)+1)) /osxcross/build.sh \
-	&& rm -rf "MacOSX${SDK_VERSION}.sdk.tar.xz" "MacOSX${SDK_VERSION}.sdk"
+	&& UNATTENDED=yes MACOSX_DEPLOYMENT_TARGET=10.11 SDK_VERSION=10.11 OSX_VERSION_MIN=10.11 JOBS=$(($(nproc)+1)) /osxcross/build.sh \
+	&& rm -rf /osxcross/tarballs
 
 CMD ["/bin/bash"]
