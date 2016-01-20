@@ -17,7 +17,7 @@ COPY ./SDKs/MacOSX${SDK_VERSION}.sdk.Xcode${XCODE_VERSION}.tar.xz /
 # docker buildpack-deps:wily:      automake autogen file
 # osxcross dependencies:           clang-3.7 llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio
 # ?osxcross ld64 -bitcode_bundle:  libwxbase3.0-dev libwxgtk3.0-dev
-# sudo:                            for OS X build work
+# sudo:                            for OS X compatible
 RUN set -ex \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
