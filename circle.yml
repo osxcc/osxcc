@@ -18,16 +18,19 @@ dependencies:
     - curl -L "${SDK_DOWNLOAD_URL}/MacOSX1011.sdk.Xcode72_7C68.tar.xz" > ./SDKs/MacOSX1011.sdk.Xcode72_7C68.tar.xz
     - docker version; docker info
     - if [[ -e ~/docker/ubuntu_wily.tar ]]; then docker load -i ~/docker/ubuntu_wily.tar; fi
+    - if [[ -e ~/docker/ubuntu_xenial.tar ]]; then docker load -i ~/docker/ubuntu_xenial.tar; fi
     - docker build -t "osxcc/osxcc:1011_711_7B1005" --build-arg SDK_VERSION=1011 --build-arg XCODE_VERSION=711_7B1005 .
     - docker build -t "osxcc/osxcc:1011_72_7C68" --build-arg SDK_VERSION=1011 --build-arg XCODE_VERSION=72_7C68 .
     - docker build -t "osxcc/osxcc:latest" --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
-    - mkdir -p ~/docker; docker save ubuntu:wily > ~/docker/ubuntu_wily.tar
+    - docker build -t "osxcc/osxcc:xenial" -f Dockerfile.xenial --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
+    - mkdir -p ~/docker; docker save ubuntu:wily > ~/docker/ubuntu_wily.tar; docker save ubuntu:xenial > ~/docker/ubuntu_xenial.tar
 
 test:
   override:
     - docker run --rm -it "osxcc/osxcc:1011_711_7B1005" env
     - docker run --rm -it "osxcc/osxcc:1011_72_7C68" env
     - docker run --rm -it "osxcc/osxcc:latest" env
+    - docker run --rm -it "osxcc/osxcc:xenial" env
 
 deployment:
   prod:
@@ -37,3 +40,4 @@ deployment:
       - docker push "osxcc/osxcc:1011_711_7B1005"
       - docker push "osxcc/osxcc:1011_72_7C68"
       - docker push "osxcc/osxcc:latest"
+      - docker push "osxcc/osxcc:xenial"
