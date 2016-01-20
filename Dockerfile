@@ -1,5 +1,5 @@
 FROM ubuntu:wily
-MAINTAINER zchee <zchee.io@gmail.com>
+MAINTAINER zchee <k@zchee.io>
 
 ENV PATH /osxcross/target/bin:$PATH
 
