@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:xenial
 MAINTAINER zchee <k@zchee.io>
 
 ENV PATH /osxcross/target/bin:$PATH
