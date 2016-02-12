@@ -18,8 +18,8 @@ dependencies:
     - docker version; docker info
     - if [[ -e ~/docker/ubuntu_wily.tar ]]; then docker load -i ~/docker/ubuntu_wily.tar; fi
     - if [[ -e ~/docker/ubuntu_xenial.tar ]]; then docker load -i ~/docker/ubuntu_xenial.tar; fi
-    - docker build -t "osxcc/osxcc:$LATEST_SDK_VERSION_$LATEST_XCODE_VERSION" --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
-    - docker build -t "osxcc/osxcc:latest" --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
+    - docker build -t osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION" --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
+    - docker tag osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION" osxcc/osxcc:latest
     - docker build -t "osxcc/osxcc:xenial" -f Dockerfile.xenial --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
     - mkdir -p ~/docker; docker save ubuntu:wily > ~/docker/ubuntu_wily.tar; docker save ubuntu:xenial > ~/docker/ubuntu_xenial.tar
 
@@ -33,6 +33,6 @@ deployment:
     branch: master
     commands:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
-      - docker push "osxcc/osxcc:$LATEST_SDK_VERSION_$LATEST_XCODE_VERSION"
+      - docker push osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION"
       - docker push "osxcc/osxcc:latest"
       - docker push "osxcc/osxcc:xenial"
