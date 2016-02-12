@@ -6,7 +6,7 @@ MAINTAINER zchee <k@zchee.io>
 # docker buildpack-deps:wily-curl: ca-certificates curl wget
 # docker buildpack-deps:wily-scm:  git openssh-client
 # docker buildpack-deps:wily:      automake autogen file
-# osxcross dependencies:           clang-3.7 llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio
+# osxcross dependencies:           clang-3.8 llvm-3.8-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio
 # ?osxcross ld64 -bitcode_bundle:  libwxbase3.0-dev libwxgtk3.0-dev
 # sudo:                            for OS X compatible
 
@@ -26,13 +26,13 @@ RUN set -ex \
 		ca-certificates curl wget \
 		git openssh-client \
 		automake autogen file \
-		clang-3.7 llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio \
+		clang-3.8 llvm-3.8-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio \
 		libwxbase3.0-dev libwxgtk3.0-dev \
 		sudo \
 	&& rm -rf /var/lib/apt/lists/* \
 	\
-	&& ln -s /usr/bin/clang-3.7 /usr/bin/clang \
-	&& ln -s /usr/bin/clang++-3.7 /usr/bin/clang++ \
+	&& ln -s /usr/bin/clang-3.8 /usr/bin/clang \
+	&& ln -s /usr/bin/clang++-3.8 /usr/bin/clang++ \
 	\
 	&& groupadd wheel \
 	&& usermod -G wheel root \
