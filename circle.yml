@@ -6,8 +6,8 @@ machine:
   services:
     - docker
   environment:
-    LATEST_SDK_VERSION: 1011
-    LATEST_XCODE_VERSION: 72_7C68
+    LATEST_SDK_VERSION: 10.11
+    LATEST_XCODE_VERSION: 7.3_7D175
 
 dependencies:
   cache_directories:
