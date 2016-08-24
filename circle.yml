@@ -1,7 +1,6 @@
 machine:
-  # https://github.com/circleci/docker/blob/docker-1.10.0/circle.yml#L3-L4
   pre:
-    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.10.0-circleci'
+    - curl -sSL https://github.com/circleci/docker/raw/docker-1.11.2/install-circleci-docker.sh | bash -s -- 1.10.0
     - sudo chmod 0755 /usr/bin/docker
   services:
     - docker
@@ -19,13 +18,11 @@ dependencies:
     - if [[ -e ~/docker/ubuntu_xenial.tar ]]; then docker load -i ~/docker/ubuntu_xenial.tar; fi
     - docker build -t osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION" --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
     - docker tag osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION" osxcc/osxcc:latest
-    - docker build -t "osxcc/osxcc:xenial" -f Dockerfile.xenial --build-arg SDK_VERSION=$LATEST_SDK_VERSION --build-arg XCODE_VERSION=$LATEST_XCODE_VERSION .
-    - mkdir -p ~/docker; docker save ubuntu:wily > ~/docker/ubuntu_wily.tar; docker save ubuntu:xenial > ~/docker/ubuntu_xenial.tar
+    - mkdir -p ~/docker; docker save ubuntu:xenial > ~/docker/ubuntu_xenial.tar
 
 test:
   override:
     - docker run --rm -it "osxcc/osxcc:latest" env
-    - docker run --rm -it "osxcc/osxcc:xenial" env
 
 deployment:
   prod:
@@ -34,4 +31,3 @@ deployment:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
       - docker push osxcc/osxcc:"$LATEST_SDK_VERSION"_"$LATEST_XCODE_VERSION"
       - docker push "osxcc/osxcc:latest"
-      - docker push "osxcc/osxcc:xenial"
